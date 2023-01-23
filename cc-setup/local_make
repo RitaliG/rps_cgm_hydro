@@ -1,0 +1,11 @@
+ INCLUDE_DIRS += -I/modules/paraview/catalyst/include/catalyst-2.0
+ LDFLAGS      += -L/modules/paraview/catalyst/lib64 -lcatalyst
+ CFLAGS       += -DUSE_CATALYST # -DCATALYST_DEBUG
+ CFLAGS       += -DPARAVIEW_IMPL_DIR=\"/modules/paraview/lib/catalyst\" -DVTK_SILENCE_GET_VOID_POINTER_WARNINGS
+
+ #HDF5_LIB      = /modules/comp_libs/hdf5/parallel/lib/
+ #INCLUDE_DIRS += -I/modules/comp_libs/hdf5/parallel/include/
+ #LDFLAGS      += -L/modules/comp_libs/hdf5/parallel/lib/ -L/home/ritali/modules/zlib/lib -lhdf5 -lz
+ LDFLAGS       += -lhdf5 -lz
+ CFLAGS        += -DUSE_HDF5 -DNO_DISK -g
+ OBJ           +=  hdf5_io.o
