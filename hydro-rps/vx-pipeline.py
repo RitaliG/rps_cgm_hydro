@@ -17,14 +17,14 @@ materialLibrary1 = GetMaterialLibrary()
 renderView1 = CreateView('RenderView')
 renderView1.ViewSize = [1611, 725]
 renderView1.AxesGrid = 'GridAxes3DActor'
-renderView1.CenterOfRotation = [0.0, 0.0, 500.0]
+renderView1.CenterOfRotation = [0.0, -0.000701904296875, 500.0]
 renderView1.StereoType = 'Crystal Eyes'
-renderView1.CameraPosition = [1585.2104076607886, 0.0, 500.0]
-renderView1.CameraFocalPoint = [0.0, 0.0, 500.0]
+renderView1.CameraPosition = [1964.259862960441, -0.000701904296875, 500.0]
+renderView1.CameraFocalPoint = [0.0, -0.000701904296875, 500.0]
 renderView1.CameraViewUp = [0.0, 0.0, 1.0]
-renderView1.CameraViewAngle = 22.75862068965517
+renderView1.CameraViewAngle = 21.60919540229885
 renderView1.CameraFocalDisk = 1.0
-renderView1.CameraParallelScale = 339.07656528706025
+renderView1.CameraParallelScale = 508.3878620646296
 renderView1.BackEnd = 'OSPRay raycaster'
 renderView1.OSPRayMaterialLibrary = materialLibrary1
 
@@ -82,17 +82,17 @@ slice1.HyperTreeGridSlicer.Origin = [0.0, -0.00069427490234375, 500.0]
 # show data from slice1
 slice1Display = Show(slice1, renderView1, 'GeometryRepresentation')
 
-# get color transfer function/color map for 'tr2'
-tr2LUT = GetColorTransferFunction('tr2')
-tr2LUT.RGBPoints = [0.0, 0.0, 0.0, 0.34902, 0.03125, 0.039216, 0.062745, 0.380392, 0.0625, 0.062745, 0.117647, 0.411765, 0.09375, 0.090196, 0.184314, 0.45098, 0.125, 0.12549, 0.262745, 0.501961, 0.15625, 0.160784, 0.337255, 0.541176, 0.1875, 0.2, 0.396078, 0.568627, 0.21875, 0.239216, 0.454902, 0.6, 0.25, 0.286275, 0.521569, 0.65098, 0.28125, 0.337255, 0.592157, 0.701961, 0.3125, 0.388235, 0.654902, 0.74902, 0.34375, 0.466667, 0.737255, 0.819608, 0.375, 0.572549, 0.819608, 0.878431, 0.40625, 0.654902, 0.866667, 0.909804, 0.4375, 0.752941, 0.917647, 0.941176, 0.46875, 0.823529, 0.956863, 0.968627, 0.5, 0.941176, 0.984314, 0.988235, 0.5, 0.988235, 0.960784, 0.901961, 0.52, 0.988235, 0.945098, 0.85098, 0.54, 0.980392, 0.898039, 0.784314, 0.5625, 0.968627, 0.835294, 0.698039, 0.59375, 0.94902, 0.733333, 0.588235, 0.625, 0.929412, 0.65098, 0.509804, 0.65625, 0.909804, 0.564706, 0.435294, 0.6875, 0.878431, 0.458824, 0.352941, 0.71875, 0.839216, 0.388235, 0.286275, 0.75, 0.760784, 0.294118, 0.211765, 0.78125, 0.701961, 0.211765, 0.168627, 0.8125, 0.65098, 0.156863, 0.129412, 0.84375, 0.6, 0.094118, 0.094118, 0.875, 0.54902, 0.066667, 0.098039, 0.90625, 0.501961, 0.05098, 0.12549, 0.9375, 0.45098, 0.054902, 0.172549, 0.96875, 0.4, 0.054902, 0.192157, 1.0, 0.34902, 0.070588, 0.211765]
-tr2LUT.ColorSpace = 'Lab'
-tr2LUT.NanColor = [0.25, 0.0, 0.0]
-tr2LUT.ScalarRangeInitialized = 1.0
+# get color transfer function/color map for 'vx1'
+vx1LUT = GetColorTransferFunction('vx1')
+vx1LUT.RGBPoints = [-1.8, 0.831373, 0.909804, 0.980392, -1.7550000000000001, 0.74902, 0.862745, 0.960784, -1.71, 0.694118, 0.827451, 0.941176, -1.62, 0.568627, 0.760784, 0.921569, -1.53, 0.45098, 0.705882, 0.901961, -1.44, 0.345098, 0.643137, 0.858824, -1.35, 0.247059, 0.572549, 0.819608, -1.26, 0.180392, 0.521569, 0.780392, -1.224, 0.14902, 0.490196, 0.74902, -1.1520000000000001, 0.129412, 0.447059, 0.709804, -1.08, 0.101961, 0.427451, 0.690196, -1.044, 0.094118, 0.403922, 0.658824, -1.008, 0.090196, 0.392157, 0.639216, -0.972, 0.082353, 0.368627, 0.619608, -0.936, 0.070588, 0.352941, 0.6, -0.9, 0.066667, 0.329412, 0.568627, -0.864, 0.07451, 0.313725, 0.541176, -0.828, 0.086275, 0.305882, 0.509804, -0.7919999999999998, 0.094118, 0.286275, 0.478431, -0.756, 0.101961, 0.278431, 0.45098, -0.72, 0.109804, 0.266667, 0.411765, -0.6839999999999999, 0.113725, 0.258824, 0.380392, -0.6479999999999999, 0.113725, 0.25098, 0.34902, -0.6119999999999999, 0.109804, 0.266667, 0.321569, -0.5759999999999998, 0.105882, 0.301961, 0.262745, -0.54, 0.094118, 0.309804, 0.243137, -0.504, 0.082353, 0.321569, 0.227451, -0.46799999999999997, 0.07451, 0.341176, 0.219608, -0.43199999999999994, 0.070588, 0.360784, 0.211765, -0.3959999999999999, 0.066667, 0.380392, 0.215686, -0.3599999999999999, 0.062745, 0.4, 0.176471, -0.27, 0.07451, 0.419608, 0.145098, -0.17999999999999994, 0.086275, 0.439216, 0.117647, -0.09000000000000008, 0.121569, 0.470588, 0.117647, 0.0, 0.184314, 0.501961, 0.14902, 0.09000000000000008, 0.254902, 0.541176, 0.188235, 0.18000000000000016, 0.32549, 0.580392, 0.231373, 0.2699999999999998, 0.403922, 0.619608, 0.278431, 0.3600000000000001, 0.501961, 0.670588, 0.333333, 0.4680000000000002, 0.592157, 0.729412, 0.4, 0.5400000000000003, 0.741176, 0.788235, 0.490196, 0.6120000000000003, 0.858824, 0.858824, 0.603922, 0.72, 0.921569, 0.835294, 0.580392, 0.9000000000000001, 0.901961, 0.729412, 0.494118, 1.0800000000000003, 0.858824, 0.584314, 0.388235, 1.26, 0.8, 0.439216, 0.321569, 1.4400000000000002, 0.678431, 0.298039, 0.203922, 1.6199999999999999, 0.54902, 0.168627, 0.109804, 1.7099999999999997, 0.478431, 0.082353, 0.047059, 1.8, 0.45098, 0.007843, 0.0]
+vx1LUT.ColorSpace = 'RGB'
+vx1LUT.NanColor = [0.25, 0.0, 0.0]
+vx1LUT.ScalarRangeInitialized = 1.0
 
 # trace defaults for the display properties.
 slice1Display.Representation = 'Surface'
-slice1Display.ColorArrayName = ['CELLS', 'tr2']
-slice1Display.LookupTable = tr2LUT
+slice1Display.ColorArrayName = ['CELLS', 'vx1']
+slice1Display.LookupTable = vx1LUT
 slice1Display.SelectTCoordArray = 'None'
 slice1Display.SelectNormalArray = 'None'
 slice1Display.SelectTangentArray = 'None'
@@ -125,27 +125,26 @@ ruler1Display = Show(ruler1, renderView1, 'RulerSourceRepresentation')
 # trace defaults for the display properties.
 ruler1Display.LabelFormat = '%6.3g kpc'
 ruler1Display.RulerMode = 1
-ruler1Display.Graduation = 20.0
-ruler1Display.AxisColor = [1.0, 1.0, 1.0]
+ruler1Display.Graduation = 25.0
+ruler1Display.AxisColor = [0.6666666666666666, 0.6666666666666666, 1.0]
+ruler1Display.Color = [0.6666666666666666, 0.6666666666666666, 1.0]
 
 # setup the color legend parameters for each legend in this view
 
-# get color legend/bar for tr2LUT in view renderView1
-tr2LUTColorBar = GetScalarBar(tr2LUT, renderView1)
-tr2LUTColorBar.WindowLocation = 'Any Location'
-tr2LUTColorBar.Position = [0.7546803227808814, 0.2606896551724139]
-tr2LUTColorBar.Title = 'CGM tracer'
-tr2LUTColorBar.ComponentTitle = ''
-tr2LUTColorBar.TitleBold = 1
-tr2LUTColorBar.TitleFontSize = 18
-tr2LUTColorBar.LabelBold = 1
-tr2LUTColorBar.AutomaticLabelFormat = 0
-tr2LUTColorBar.LabelFormat = '%-#6.1e'
-tr2LUTColorBar.ScalarBarThickness = 18
-tr2LUTColorBar.ScalarBarLength = 0.5506896551724143
+# get color legend/bar for vx1LUT in view renderView1
+vx1LUTColorBar = GetScalarBar(vx1LUT, renderView1)
+vx1LUTColorBar.WindowLocation = 'Any Location'
+vx1LUTColorBar.Position = [0.7268501275950067, 0.2565517241379309]
+vx1LUTColorBar.Title = 'Vx [100 km/s]'
+vx1LUTColorBar.ComponentTitle = ''
+vx1LUTColorBar.TitleBold = 1
+vx1LUTColorBar.TitleFontSize = 18
+vx1LUTColorBar.LabelBold = 1
+vx1LUTColorBar.ScalarBarThickness = 18
+vx1LUTColorBar.ScalarBarLength = 0.5341379310344828
 
 # set color bar visibility
-tr2LUTColorBar.Visibility = 1
+vx1LUTColorBar.Visibility = 1
 
 # show color legend
 slice1Display.SetScalarBarVisibility(renderView1, True)
@@ -155,9 +154,10 @@ slice1Display.SetScalarBarVisibility(renderView1, True)
 # note: the Get..() functions create a new object, if needed
 # ----------------------------------------------------------------
 
-# get opacity transfer function/opacity map for 'tr2'
-tr2PWF = GetOpacityTransferFunction('tr2')
-tr2PWF.ScalarRangeInitialized = 1
+# get opacity transfer function/opacity map for 'vx1'
+vx1PWF = GetOpacityTransferFunction('vx1')
+vx1PWF.Points = [-1.8, 0.0, 0.5, 0.0, 1.8, 1.0, 0.5, 0.0]
+vx1PWF.ScalarRangeInitialized = 1
 
 # ----------------------------------------------------------------
 # setup extractors
@@ -172,7 +172,7 @@ pNG1.Trigger = 'TimeValue'
 pNG1.Trigger.Length = 0.5
 
 # init the 'PNG' selected for 'Writer'
-pNG1.Writer.FileName = 'cgm_tracer_{timestep:06d}.png'
+pNG1.Writer.FileName = 'vx_{timestep:06d}.png'
 pNG1.Writer.ImageResolution = [1215, 725]
 pNG1.Writer.FontScaling = 'Do not scale fonts'
 pNG1.Writer.OverrideColorPalette = 'BlackBackground'
@@ -190,7 +190,7 @@ SetActiveSource(grid)
 # Catalyst options
 from paraview import catalyst
 options = catalyst.Options()
-options.ExtractsOutputDirectory = 'output/catalyst/cgm_tracer'
+options.ExtractsOutputDirectory = 'output/catalyst/vx'
 options.GenerateCinemaSpecification = 1
 options.GlobalTrigger = 'TimeValue'
 options.EnableCatalystLive = 1

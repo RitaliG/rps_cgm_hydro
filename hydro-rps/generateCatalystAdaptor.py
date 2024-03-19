@@ -1,8 +1,26 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Sep 19 20:53:50 2022
+
+@author: alankar
+"""
+import time
+
+dump_vars = ['rho', 'prs', 'vx1', 'vx2', 'vx3']
+code_vars = ['RHO', 'PRS', 'iVR', 'iVPHI', 'iVZ']
+user_vars = ['Temp', 'ndens', 'mach', 'PbykB']
+#Assumption: User defined variables are upper case version of user_vars[]
+ntracers = 3
+
+catalyst_ini = \
+f'''
 /* ----------- Auto generated from generateCatalystAdaptor.py ----------------- 
-Created on Fri Jan 13 11:38:58 2023
+Created on {time.ctime()}
 
 @author: alankar                                                                */
-
+'''+\
+'''
 #include <catalyst.h>
 #include <stdio.h>
 #include <math.h>
@@ -29,10 +47,13 @@ void do_catalyst_initialization(int scripts, char** pipeline_script)
   conduit_node_destroy(catalyst_init_params);
   if (err != catalyst_status_ok)
   {
-    printf("Failed to initialize Catalyst: %d\n", err);
+    printf("Failed to initialize Catalyst: %d\\n", err);
   }
 }
+'''
 
+catalyst_execute_p1 = \
+'''
 //-----------------------------------------------------------------------------
 /**
  * Execute per cycle
@@ -123,7 +144,7 @@ void do_catalyst_execute(int cycle, double time, Grid* grid, Data* d)
         zp[counter]   = x3;
         )
         #else
-        printLog ("! CatalystAdaptor: Unknown geometry\n");
+        printLog ("! CatalystAdaptor: Unknown geometry\\n");
         QUIT_PLUTO(1);
 	#endif
 	counter++;
@@ -131,7 +152,10 @@ void do_catalyst_execute(int cycle, double time, Grid* grid, Data* d)
     }
   }
   counter = 0;
+'''
 
+catalyst_grid = \
+'''
   /*   setup conduit for catalyst   */
   conduit_node* catalyst_exec_params = conduit_node_create();
   conduit_node_set_path_int64(catalyst_exec_params, "catalyst/state/timestep", cycle);
@@ -153,85 +177,47 @@ void do_catalyst_execute(int cycle, double time, Grid* grid, Data* d)
   conduit_node_set_path_char8_str(mesh, "topologies/mesh/coordset", "coords");
   conduit_node_set_path_char8_str(mesh, "topologies/mesh/elements/shape", "hex");
   conduit_node_set_path_external_int64_ptr(mesh, "topologies/mesh/elements/connectivity", CellConn, numCells * 8);
+'''
 
-  // add rho (cell-field)
-  conduit_node_set_path_char8_str(mesh, "fields/rho/association", "element");
-  conduit_node_set_path_char8_str(mesh, "fields/rho/topology", "mesh");
-  conduit_node_set_path_char8_str(mesh, "fields/rho/volume_dependent", "false");
-  conduit_node_set_path_external_float64_ptr(mesh, "fields/rho/values", /*rho */(double *)(**d->Vc[RHO]), numCells );    
+catalyst_field = f''
+
+for pos, field in enumerate(dump_vars):
+    catalyst_field += \
+    f'''
+  // add {field} (cell-field)
+  conduit_node_set_path_char8_str(mesh, "fields/{field}/association", "element");
+  conduit_node_set_path_char8_str(mesh, "fields/{field}/topology", "mesh");
+  conduit_node_set_path_char8_str(mesh, "fields/{field}/volume_dependent", "false");
+  conduit_node_set_path_external_float64_ptr(mesh, "fields/{field}/values", /*{field} */(double *)(**d->Vc[{code_vars[pos]}]), numCells );    
+    '''
     
-  // add prs (cell-field)
-  conduit_node_set_path_char8_str(mesh, "fields/prs/association", "element");
-  conduit_node_set_path_char8_str(mesh, "fields/prs/topology", "mesh");
-  conduit_node_set_path_char8_str(mesh, "fields/prs/volume_dependent", "false");
-  conduit_node_set_path_external_float64_ptr(mesh, "fields/prs/values", /*prs */(double *)(**d->Vc[PRS]), numCells );    
+for i in range(ntracers):
+    catalyst_field += \
+    f'''
+  // add tr{i+1} (cell-field)
+  conduit_node_set_path_char8_str(mesh, "fields/tr{i+1}/association", "element");
+  conduit_node_set_path_char8_str(mesh, "fields/tr{i+1}/topology", "mesh");
+  conduit_node_set_path_char8_str(mesh, "fields/tr{i+1}/volume_dependent", "false");
+  conduit_node_set_path_external_float64_ptr(mesh, "fields/tr{i+1}/values", /*tr{i+1} */(double *)(**d->Vc[TRC{'+'+str(i) if i>0 else ''}]), numCells );    
+    '''
     
-  // add vx1 (cell-field)
-  conduit_node_set_path_char8_str(mesh, "fields/vx1/association", "element");
-  conduit_node_set_path_char8_str(mesh, "fields/vx1/topology", "mesh");
-  conduit_node_set_path_char8_str(mesh, "fields/vx1/volume_dependent", "false");
-  conduit_node_set_path_external_float64_ptr(mesh, "fields/vx1/values", /*vx1 */(double *)(**d->Vc[iVR]), numCells );    
-    
-  // add vx2 (cell-field)
-  conduit_node_set_path_char8_str(mesh, "fields/vx2/association", "element");
-  conduit_node_set_path_char8_str(mesh, "fields/vx2/topology", "mesh");
-  conduit_node_set_path_char8_str(mesh, "fields/vx2/volume_dependent", "false");
-  conduit_node_set_path_external_float64_ptr(mesh, "fields/vx2/values", /*vx2 */(double *)(**d->Vc[iVPHI]), numCells );    
-    
-  // add vx3 (cell-field)
-  conduit_node_set_path_char8_str(mesh, "fields/vx3/association", "element");
-  conduit_node_set_path_char8_str(mesh, "fields/vx3/topology", "mesh");
-  conduit_node_set_path_char8_str(mesh, "fields/vx3/volume_dependent", "false");
-  conduit_node_set_path_external_float64_ptr(mesh, "fields/vx3/values", /*vx3 */(double *)(**d->Vc[iVZ]), numCells );    
-    
-  // add tr1 (cell-field)
-  conduit_node_set_path_char8_str(mesh, "fields/tr1/association", "element");
-  conduit_node_set_path_char8_str(mesh, "fields/tr1/topology", "mesh");
-  conduit_node_set_path_char8_str(mesh, "fields/tr1/volume_dependent", "false");
-  conduit_node_set_path_external_float64_ptr(mesh, "fields/tr1/values", /*tr1 */(double *)(**d->Vc[TRC]), numCells );    
-    
-  // add tr2 (cell-field)
-  conduit_node_set_path_char8_str(mesh, "fields/tr2/association", "element");
-  conduit_node_set_path_char8_str(mesh, "fields/tr2/topology", "mesh");
-  conduit_node_set_path_char8_str(mesh, "fields/tr2/volume_dependent", "false");
-  conduit_node_set_path_external_float64_ptr(mesh, "fields/tr2/values", /*tr2 */(double *)(**d->Vc[TRC+1]), numCells );    
-    
-  // add tr3 (cell-field)
-  conduit_node_set_path_char8_str(mesh, "fields/tr3/association", "element");
-  conduit_node_set_path_char8_str(mesh, "fields/tr3/topology", "mesh");
-  conduit_node_set_path_char8_str(mesh, "fields/tr3/volume_dependent", "false");
-  conduit_node_set_path_external_float64_ptr(mesh, "fields/tr3/values", /*tr3 */(double *)(**d->Vc[TRC+2]), numCells );    
-    
+if len(user_vars) != 0:
+    catalyst_field +=\
+    f'''
   ComputeUserVar (d, grid);
+    '''
+    for field in user_vars:
+        catalyst_field += \
+        f'''
+  // add {field} (cell-field)
+  double ***{field}  = GetUserVar("{field}");
+  conduit_node_set_path_char8_str(mesh, "fields/{field}/association", "element");
+  conduit_node_set_path_char8_str(mesh, "fields/{field}/topology", "mesh");
+  conduit_node_set_path_char8_str(mesh, "fields/{field}/volume_dependent", "false");
+  conduit_node_set_path_external_float64_ptr(mesh, "fields/{field}/values", /*{field} */(double *)(**{field}), numCells ); 
+        '''
     
-  // add Temp (cell-field)
-  double ***Temp  = GetUserVar("Temp");
-  conduit_node_set_path_char8_str(mesh, "fields/Temp/association", "element");
-  conduit_node_set_path_char8_str(mesh, "fields/Temp/topology", "mesh");
-  conduit_node_set_path_char8_str(mesh, "fields/Temp/volume_dependent", "false");
-  conduit_node_set_path_external_float64_ptr(mesh, "fields/Temp/values", /*Temp */(double *)(**Temp), numCells ); 
-        
-  // add ndens (cell-field)
-  double ***ndens  = GetUserVar("ndens");
-  conduit_node_set_path_char8_str(mesh, "fields/ndens/association", "element");
-  conduit_node_set_path_char8_str(mesh, "fields/ndens/topology", "mesh");
-  conduit_node_set_path_char8_str(mesh, "fields/ndens/volume_dependent", "false");
-  conduit_node_set_path_external_float64_ptr(mesh, "fields/ndens/values", /*ndens */(double *)(**ndens), numCells ); 
-        
-  // add mach (cell-field)
-  double ***mach  = GetUserVar("mach");
-  conduit_node_set_path_char8_str(mesh, "fields/mach/association", "element");
-  conduit_node_set_path_char8_str(mesh, "fields/mach/topology", "mesh");
-  conduit_node_set_path_char8_str(mesh, "fields/mach/volume_dependent", "false");
-  conduit_node_set_path_external_float64_ptr(mesh, "fields/mach/values", /*mach */(double *)(**mach), numCells ); 
-        
-  // add PbykB (cell-field)
-  double ***PbykB  = GetUserVar("PbykB");
-  conduit_node_set_path_char8_str(mesh, "fields/PbykB/association", "element");
-  conduit_node_set_path_char8_str(mesh, "fields/PbykB/topology", "mesh");
-  conduit_node_set_path_char8_str(mesh, "fields/PbykB/volume_dependent", "false");
-  conduit_node_set_path_external_float64_ptr(mesh, "fields/PbykB/values", /*PbykB */(double *)(**PbykB), numCells ); 
-        
+catalyst_execute_p2 = '''
   // add the mesh info (conduit mesh) to catalyst_exec_params
   conduit_node_set_path_external_node(catalyst_exec_params, "catalyst/channels/grid/data", mesh);
   
@@ -250,12 +236,14 @@ void do_catalyst_execute(int cycle, double time, Grid* grid, Data* d)
   enum catalyst_status err = catalyst_execute(catalyst_exec_params);
   if (err != catalyst_status_ok)
   {
-    printf("Failed to execute Catalyst: %d\n", err);
+    printf("Failed to execute Catalyst: %d\\n", err);
   }
   conduit_node_destroy(catalyst_exec_params);
   conduit_node_destroy(mesh);
 }
+'''
 
+catalyst_finalize = '''
 //-----------------------------------------------------------------------------
 /**
  * Finalize Catalyst.
@@ -267,7 +255,12 @@ void do_catalyst_finalization()
   enum catalyst_status err = catalyst_finalize(catalyst_fini_params);
   if (err != catalyst_status_ok)
   {
-    printf("Failed to execute Catalyst: %d\n", err);
+    printf("Failed to execute Catalyst: %d\\n", err);
   }
   conduit_node_destroy(catalyst_fini_params);
 }
+'''
+
+Adaptor_code = catalyst_ini[1:] + catalyst_execute_p1 + catalyst_grid + catalyst_field + catalyst_execute_p2 + catalyst_finalize
+with open('CatalystAdaptor.h', 'w') as file:
+    file.write(Adaptor_code)
