@@ -1,10 +1,11 @@
 ## Ram pressure stripping simulations - the co-evolution of interstellar and circumgalactic media
 ---
 
-<img align="right" src="https://github.com/RitaliG/rps_cgm_hydro/assets/59788464/38a0e0b3-e967-4764-aae6-94026973f050" alt="volumeRender" width="480"/>
-
 ### [![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=C07DF7&random=false&width=435&lines=Checkout+our+paper%3A)](https://git.io/typing-svg)    
 #### :label: Ram pressure stripping in clusters: Gravity can bind the ISM but not the CGM ([https://arxiv.org/abs/2404.02035](https://arxiv.org/abs/2404.02035))
+
+<img  src="https://github.com/RitaliG/rps_cgm_hydro/assets/59788464/38a0e0b3-e967-4764-aae6-94026973f050" alt="volumeRender" width="680"/>
+
 ---
 :open_file_folder: [`./hydro-rps/`](./hydro-rps) is the *codebase* used to simulate our galaxy (with both CGM and ISM) facing *constant ram pressure* from intracluster medium 
 using [PLUTO](https://plutocode.ph.unito.it/documentation.html) (version 4.4 patch 2)
