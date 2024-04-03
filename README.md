@@ -1,15 +1,26 @@
 # Ram pressure stripping simulations 
 ## - the co-evolution of interstellar and circumgalactic media
 ---
-:open_file_folder: [`./hydro-rps/`](./hydro-rps) is the *codebase* used to simulate our galaxy (with both CGM and ISM) facing *constant ram pressure* from intracluster medium 
-using [PLUTO](https://plutocode.ph.unito.it/documentation.html) (version 4.2 patch 2)
+### *Accompanying paper*:  Ram pressure stripping in clusters ([https://arxiv.org/abs/2404.02035](https://arxiv.org/abs/2404.02035))
 
-:open_file_folder: [`./control-setup1/`](./hydro-rps) contains files used simulate a control setup similar to the ram pressure stripping simulation by turning the *gravity off*. (the structure is similar to hydro-rps; major changes in [`init.c`](./control-setup1/init.c) and [`definitions.h`](./control-setup1/definitions.h)).
+<img align="right" src="https://github.com/RitaliG/rps_cgm_hydro/assets/59788464/38a0e0b3-e967-4764-aae6-94026973f050" alt="volumeRender" width="530"/>
+
+
+:open_file_folder: [`./hydro-rps/`](./hydro-rps) is the *codebase* used to simulate our galaxy (with both CGM and ISM) facing *constant ram pressure* from intracluster medium 
+using [PLUTO](https://plutocode.ph.unito.it/documentation.html) (version 4.4 patch 2)
+
+:open_file_folder: [`./control-setup1/`](./hydro-rps) contains files used to simulate a control setup similar to the ram pressure stripping simulation by turning the *gravity off*. (the structure is similar to hydro-rps; major changes in [`init.c`](./control-setup1/init.c) and [`definitions.h`](./control-setup1/definitions.h)).
 
 > [!IMPORTANT]
 > ### Check out my blog on [the detailed steps to use Catalyst with PLUTO](https://sites.google.com/view/ritalighosh/use-catalyst-with-your-simulations?authuser=0).
 
+
 ### 🏃 Initialization
+* The procedure to set up our equilibrium condition is as follows:
+
+<img src="https://github.com/RitaliG/rps_cgm_hydro/assets/59788464/9493fb43-acfd-4981-a942-35fabefa2cd0" alt="algorithm" width="260"/>
+<img src="https://github.com/RitaliG/rps_cgm_hydro/assets/59788464/69ec651d-418f-40a0-b6ca-16102f65fe5c" alt="cartoon" width="382"/>
+
 * Compile Pluto with its dependencies and create the executable `./pluto`
   ```
   make -j$(nproc) && make clean 
@@ -29,3 +40,10 @@ using [PLUTO](https://plutocode.ph.unito.it/documentation.html) (version 4.2 pat
 > - [userdef_output.c](./hydro-rps/userdef_output.c) &rarr; script for user-defined outputs
 > - [*-pipeline.py](./hydro-rps/) &rarr; python files to be used during runtime by Catalyst
 > - [generateCatalystAdaptor.py](./hydro-rps/generateCatalystAdaptor.py) &rarr; generates the [`CatalystAdaptor.h`](./hydro-rps/CatalystAdapotor.h) file
+
+
+### 🧑‍💻 Developers
+
+[🔗](https://github.com/RitaliG) Ritali Ghosh,
+[🔗](https://github.com/dutta-alankar) Alankar Dutta, and
+[🛰️](http://www.physics.iisc.ernet.in/~prateek/) Prateek Sharma
