@@ -1,8 +1,10 @@
 # Ram pressure stripping simulations 
 ## - the co-evolution of interstellar and circumgalactic media
 ---
-:memo: [`./hydro-rps/`](./hydro-rps) is the *codebase* used to simulate our galaxy (with both CGM and ISM) facing *constant ram pressure* from intracluster medium 
+:open_file_folder: [`./hydro-rps/`](./hydro-rps) is the *codebase* used to simulate our galaxy (with both CGM and ISM) facing *constant ram pressure* from intracluster medium 
 using [PLUTO](https://plutocode.ph.unito.it/documentation.html) (version 4.2 patch 2)
+
+:open_file_folder: [`./control-setup1/`](./hydro-rps) contains files used simulate a control setup similar to the ram pressure stripping simulation by turning the *gravity off*. (the structure is similar to hydro-rps; major changes in [`init.c`](./control-setup1/init.c) and [`definitions.h`](./control-setup1/definitions.h)).
 
 > [!IMPORTANT]
 > ### Check out my blog on [the detailed steps to use Catalyst with PLUTO](https://sites.google.com/view/ritalighosh/use-catalyst-with-your-simulations?authuser=0).
