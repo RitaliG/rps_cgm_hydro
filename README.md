@@ -1,20 +1,22 @@
-# Ram pressure stripping simulations 
-<img align="right" src="https://github.com/RitaliG/rps_cgm_hydro/assets/59788464/38a0e0b3-e967-4764-aae6-94026973f050" alt="volumeRender" width="520"/>
-
-## - the co-evolution of interstellar and circumgalactic media
+## Ram pressure stripping simulations - the co-evolution of interstellar and circumgalactic media
 ---
-### *Accompanying paper*:  Ram pressure stripping in clusters: Gravity can bind the ISM but not the CGM ([https://arxiv.org/abs/2404.02035](https://arxiv.org/abs/2404.02035))
 
+<img align="right" src="https://github.com/RitaliG/rps_cgm_hydro/assets/59788464/38a0e0b3-e967-4764-aae6-94026973f050" alt="volumeRender" width="480"/>
+
+### [![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=C07DF7&random=false&width=435&lines=Checkout+our+paper%3A)](https://git.io/typing-svg)    
+#### :label: Ram pressure stripping in clusters: Gravity can bind the ISM but not the CGM ([https://arxiv.org/abs/2404.02035](https://arxiv.org/abs/2404.02035))
+---
 :open_file_folder: [`./hydro-rps/`](./hydro-rps) is the *codebase* used to simulate our galaxy (with both CGM and ISM) facing *constant ram pressure* from intracluster medium 
 using [PLUTO](https://plutocode.ph.unito.it/documentation.html) (version 4.4 patch 2)
 
 :open_file_folder: [`./control-setup1/`](./hydro-rps) contains files used to simulate a control setup similar to the ram pressure stripping simulation by turning the *gravity off*. (the structure is similar to hydro-rps; major changes in [`init.c`](./control-setup1/init.c) and [`definitions.h`](./control-setup1/definitions.h)).
 
+---
 > [!IMPORTANT]
-> ### Check out my blog on [the detailed steps to use Catalyst with PLUTO](https://sites.google.com/view/ritalighosh/use-catalyst-with-your-simulations?authuser=0).
+> #### Check out my blog on [the detailed steps to use Catalyst with PLUTO](https://sites.google.com/view/ritalighosh/use-catalyst-with-your-simulations?authuser=0).
 
 
-### 🏃 Initialization
+#### 🏃 Initialization
 * The procedure to set up our equilibrium condition is as follows:
 
 <img src="https://github.com/RitaliG/rps_cgm_hydro/assets/59788464/9493fb43-acfd-4981-a942-35fabefa2cd0" alt="algorithm" width="260"/>
